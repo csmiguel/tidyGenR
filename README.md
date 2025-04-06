@@ -1,7 +1,7 @@
 [![R-CMD-check](https://github.com/csmiguel/tidyGenR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/csmiguel/tidyGenR/actions/workflows/R-CMD-check.yaml)
 
 # tidyGenR: Tidy multilocus amplicon genotypes in R
-![hex sticker](man/figures/sticker.jpg)
+![hex sticker](man/figures/tidyGenR.png)
 
 R package optimized for genotyping multilocus amplicon sequences from High Throughput Sequencing in diploid organism. Starting with FASTQ multilocus amplicon sequencing reads from high throughput sequencing, it demultiplexes reads by locus, call variants (using DADA2), and genotypes samples. It generates tidy variants and genotypes outputs, and it provides a family of functions for data manipulation and format conversion.
 
@@ -21,5 +21,5 @@ remotes::install_github("csmiguel/tidyGenR")
 
 # Workflow
 
-![workflow](man/figures/fig1_flow.svg)
+<img src="man/figures/fig1_flow.svg" alt="workflow diagram" style="width:100%;"/>
 
