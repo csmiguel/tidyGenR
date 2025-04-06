@@ -1,0 +1,171 @@
+---
+title: "Introduction to tidyGenR"
+author: "Miguel Camacho-Sanchez"
+output:
+  BiocStyle::html_document
+vignette: >
+  %\VignetteIndexEntry{tidyGenR-intro}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Introduction
+
+```{r style, echo = FALSE, results = 'asis'}
+BiocStyle::markdown()
+```
+
+```{r options, include = FALSE}
+knitr::opts_chunk$set(
+    collapse = TRUE,
+    comment = "#>"
+)
+```
+
+*tidyGenR* core functions cover all the steps necessary to determine sequence variants and genotypes from sequencing reads coming from **multilocus amplicon** libraries sequenced by high throughput sequencing technologies.
+
+This vignette contains a standard workflow for paired-end data.
+
+```{r setup}
+library(tidyGenR)
+```
+
+# Input raw sequences
+
+The raw and processed data used in this vignette come from amplicon libraries of *Rattus baluensis* (Camacho-Sanchez et al. *in preparation*), deposited in [FigShare](https://doi.org/10.6084/m9.figshare.25816858.v4).
+
+Naming of FASTQ must meet a given format (see `?check_raw_reads()`). Ensuring a minimum number of reads per file, unique sample names and non-orphan reads in paired-end data can be checked with `check_raw_reads()`. Sample names are extracted from the file names and stored in `check_raw_reads()$samples`.
+
+```{r}
+# download test raw data (if not downloaded)
+raw <-
+  system.file("extdata", "raw", package = "tidyGenR")
+freads <- list.files(raw,
+    pattern = "1.fastq",
+    full.names = TRUE
+)
+rreads <- list.files(raw,
+    pattern = "2.fastq",
+    full.names = TRUE
+)
+
+# check raw reads
+check_raw_reads(
+    freads = freads,
+    rreads = rreads,
+    low_readcount = 100
+)
+```
+
+# Demultiplex loci
+
+Reads from different loci are mixed together in the same sample FASTQ. The known primer sequences at the ends of amplicons can be used to demultiplex reads by locus using `demultiplex()`. This function produces an executable for [cutadapt](https://cutadapt.readthedocs.io/en/stable). A `data.frame` with primer sequences can be used to feed `demultiplex()` with primer sequences.
+
+```{r primers}
+# data.frame with primers
+data("primers")
+head(primers, 3)
+```
+
+```{r demultiplex, results = "hide", message=FALSE}
+# demultiplex reads by locus using 3 primer pairs
+demultiplex(
+    cutadapt = "cutadapt",
+    freads = freads,
+    rreads = rreads,
+    primers = primers[1:3, ],
+    sh_out = file.path(tempdir(), "cutadapt.sh"),
+    run = FALSE
+)
+```
+
+`demultiplex()` creates a script as below:
+
+```{r cutadapt_script}
+readLines(file.path(tempdir(), "cutadapt.sh"))
+```
+
+If problems arise when running `cutadapt` `run = TRUE`, the script written to `sh_out` can be edited manually and run outside R. FASTQ with zero or few reads can be removed using `remove_poor_fastq(file.path(outdir, "demultiplexed"))`
+
+# Truncate reads
+
+Variants are determined on the basis of 1-nt resolution. Thus, reads to be compared need to have the same length and minimum quality stantards (eg. no 'Ns') (see DADA2 documentation, [Callahan et al. 2016](https://doi.org/10.1038/nmeth.3869)). Sequence quality can be checked with FASTQC, `dada2::plotQualityProfile()` or other QC checking software to guide truncation lengths. Truncation and minimal quality filtering are performed with `trunc_amp()`, a wrapper function of `dada2::filterAndTrim()`. Global or locus-specific truncation lengths can be supplied in a `data.frame`.
+
+```{r truncate_one_locus}
+# Download per-locus demultiplexed FASTQ
+dem <-
+  system.file("extdata", "demultiplexed", package = "tidyGenR")
+# truncate reads for one locus
+one_locus <-
+    trunc_amp(
+        loci = "chrna9",
+        mode_trun = "pe",
+        in_dir = dem,
+        fw_pattern = "1.fastq.gz",
+        rv_pattern = "2.fastq.gz",
+        trunc_fr = c(250, 180),
+        max_ee = c(3, 3),
+        outdir = file.path(tempdir(), "truncated")
+    )
+```
+
+It is possible to use locus-specific truncation lengths specified in a `data.frame`.
+
+```{r trunc_fr}
+# dataframe with locus-specific truncation lengths
+data("trunc_fr")
+
+head(trunc_fr, 3)
+```
+
+```{r truncate_all_loci, results="hide", message=FALSE}
+# truncate reads for all loci using locus-specific truncation lengths
+all_loci <-
+    trunc_amp(
+        mode_trun = "pe",
+        in_dir = dem,
+        fw_pattern = "1.fastq.gz",
+        rv_pattern = "2.fastq.gz",
+        trunc_fr = trunc_fr,
+        max_ee = c(3, 3),
+        outdir = file.path(tempdir(), "truncated")
+    )
+```
+
+`trunc_amp()` writes truncated FASTQ to a directory and returns a list with in and out reads.
+
+Truncated FASTQ:
+
+```{r truncated_fastq}
+head(list.files(file.path(tempdir(), "truncated")))
+```
+
+IN and OUT reads after `trunc_amp()`:
+
+```{r trunc_in_out}
+head(all_loci, 3)
+```
+
+# Variant calling
+
+Real sequence variants and their frequency are determined with `variant_call()`. It utilizes the 'DADA2' ASV determination pipeline, but for multiple loci. Determination of variants and potentially, merging paired-end reads, and removal of chimeras are performed altogether with `variant_call()`. Binned read qualities (i.e. from NovaSeq) require the use of `error_function = loess_err_mod4` (details in `?loess_err_mod4()`). Variants are returned in `tidy` format.
+
+```{r variant_calling, message=FALSE, results="hide"}
+variants <- variant_call(in_dir = file.path(tempdir(), "truncated"))
+head(variants)
+```
+```{r head_variants}
+head(variants)
+```
+
+Variants can be further filtered with `filter_variants()` based on frequency (`maf`) and depth (`ad`) thresholds.
+
+# Genotype
+
+Genotypes can be determined from variants. So far, the implemented method for genotyping is based on the expected maximum number of alleles per sample and locus and the read threshold (`ADt`) for discriminating homozygotes from hemizygotes.
+
+```{r genotype, message = FALSE}
+genotypes <-
+    genotype(variants, ADt = 10, ploidy = 2)
+head(genotypes)
+```
