@@ -32,9 +32,9 @@ library(tidyGenR)
 
 # Input raw sequences
 
-The raw and processed data used in this vignette come from amplicon libraries of *Rattus baluensis* (Camacho-Sanchez et al. *in preparation*), deposited in [FigShare](https://doi.org/10.6084/m9.figshare.25816858.v4).
+The raw and processed data used in this vignette come from amplicon libraries of *Rattus baluensis* (Camacho-Sanchez et al. *submitted*).
 
-Naming of FASTQ must meet a given format (see `?check_raw_reads()`). Ensuring a minimum number of reads per file, unique sample names and non-orphan reads in paired-end data can be checked with `check_raw_reads()`. Sample names are extracted from the file names and stored in `check_raw_reads()$samples`.
+Naming of FASTQ must meet a given format.
 
 ```{r}
 # download test raw data (if not downloaded)
@@ -42,19 +42,10 @@ raw <-
   system.file("extdata", "raw", package = "tidyGenR")
 freads <- list.files(raw,
     pattern = "1.fastq",
-    full.names = TRUE
-)
+    full.names = TRUE)
 rreads <- list.files(raw,
     pattern = "2.fastq",
-    full.names = TRUE
-)
-
-# check raw reads
-check_raw_reads(
-    freads = freads,
-    rreads = rreads,
-    low_readcount = 100
-)
+    full.names = TRUE)
 ```
 
 # Demultiplex loci
@@ -85,7 +76,7 @@ demultiplex(
 readLines(file.path(tempdir(), "cutadapt.sh"))
 ```
 
-If problems arise when running `cutadapt` `run = TRUE`, the script written to `sh_out` can be edited manually and run outside R. FASTQ with zero or few reads can be removed using `remove_poor_fastq(file.path(outdir, "demultiplexed"))`
+If problems arise when running `cutadapt` `run = TRUE`, the script written to `sh_out` can be edited manually and run outside R. FASTQ with zero or few reads can be removed using `remove_poor_fastq()`
 
 # Truncate reads
 
