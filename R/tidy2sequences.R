@@ -71,7 +71,7 @@ tidy2sequences <- function(td,
             format = "fasta",
             filepath = filename
         )
-        message("Sequences have benn written to ", filename)
+        message("Sequences have been written to: ", filename)
     } else if (!filename) {
         message("Sequences have not been written to fasta file.")
     }

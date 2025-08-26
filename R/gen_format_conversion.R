@@ -48,7 +48,7 @@
 #'  loci names.
 #'  Each cell contains genotypes in the *A/B* format.
 #'
-#' For the *STRUCTURE* format, -9' are introduced as missing data in
+#' For the *STRUCTURE* format, '-9' are introduced as missing data in
 #' STRUCTURE output.
 #' Ploidy is detected automatically from 'allele_no'.
 #' NAs are introduced if no allele_no found.
@@ -100,6 +100,7 @@ gen_tidy2compact <- function(gen, delim = "/") {
     w <- unite(z, "genotype", -c(.data$sample, .data$locus),
         sep = delim, na.rm = TRUE
     )
+    attr(w, "ploidy") <- attr(gen, "ploidy")
     return(w)
 }
 #' @rdname genotype_conversion
@@ -112,11 +113,14 @@ gen_compact2wide <- function(gen) {
             paste(mand_vars, collapse = ", ")
         )
     }
-    pivot_wider(gen,
+    w <-
+      pivot_wider(gen,
         id_cols = "sample",
         names_from = "locus",
         values_from = "genotype"
     )
+    attr(w, "ploidy") <- attr(gen, "ploidy")
+    return(w)
 }
 
 #' @rdname genotype_conversion
@@ -128,36 +132,38 @@ gen_tidy2wide <- function(gen) {
 #' @rdname genotype_conversion
 #' @export
 gen_wide2structure <- function(gen, write_out, popdata = FALSE, delim = "/") {
-    if (isFALSE(popdata)) {
-        message("No popdata available.")
-    } else if (!"data.frame" %in% class(popdata)) {
-        stop("'popdata' must be a dataframe.")
-    } else if ("data.frame" %in% class(popdata)) {
-        if (!all(c("sample", "population") %in% names(popdata))) {
-            stop(
-                "'popdata' must have a column named 'sample' matching samples",
-                " in 'gen', and a 'population' descriptor if POPDATA flag is used ",
-                "in structure."
-            )
-        } else if (all(c("sample", "population") %in% names(popdata))) {
-            message("popdata is formatted correctly.")
-        }
-    }
+  if(isTRUE(attr(gen, "ploidy") == 2)) {
+    message("All loci are assumed to have a ploidy of 2")
+  } else {
+    stop("The genotypes must have a 'ploidy' of 2 in their attributes: attr(gen, 'ploidy') == 2.")
+  }
     gen <- column_to_rownames(gen, "sample")
+    # separate alleles into two contigous rows
     h <-
-        # sepparate rows by delimiter into new row
-        separate_longer_delim(gen, cols = everything(), delim = delim) |>
-        # for each col convert alleles to integers
-        apply(2, function(x) {
-            z <- gsub("NA", NA, x) # some NAs are as character
-            w <- as.integer(as.factor(z))
-            w[is.na(w)] <- "-9"
-            return(w)
-        })
+      plyr::alply(gen, 1, function(x) {
+        data.frame(a = str_split_i(x, "//?", 1),
+                   b = str_split_i(x, "//?", 2)) |>
+          t() |>
+          as.data.frame()
+      }) |>
+      bind_rows() |>
+      mutate(across(everything(), ~as.integer(as.factor(.x)))) |>
+      setNames(names(gen))
+    h[is.na(h)] <- "-9"
     # duplicate sample names
     snames <- rep(rownames(gen), each = 2)
     # dataframe with sample + pop
-    if ("data.frame" %in% class(popdata)) {
+    if (inherits(popdata, "data.frame")) {
+      test_1 <- all(c("sample", "population") %in% names(popdata))
+      if (!test_1) {
+        stop(
+          "'popdata' must have a column named 'sample' matching samples",
+          " in 'gen', and a 'population' descriptor if POPDATA flag is used ",
+          "in STRUCTURE")
+      } else {
+        message("popdata is formatted correctly.")
+      }
+      # reorder pops as per sample names
         df1 <-
             data.frame(
                 sample = snames,
@@ -168,8 +174,11 @@ gen_wide2structure <- function(gen, write_out, popdata = FALSE, delim = "/") {
             stop("One or more samples did not match any of the populations.")
         }
     } else if (isFALSE(popdata)) {
-        df1 <-
-            data.frame(sample = snames)
+      message("No popdata available.")
+      df1 <-
+        data.frame(sample = snames)
+    } else {
+      stop("'popdata' must be a dataframe.")
     }
     df2 <- cbind(df1, h)
     # first line in structure file

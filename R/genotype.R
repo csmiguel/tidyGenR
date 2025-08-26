@@ -125,5 +125,6 @@ add_allele_no <- function(gen) {
             mutate(x, allele_no = seq_len(nrow(x)))
         }) |>
         as_tibble()
+    attr(gen_alleleno, "ploidy") <- attr(gen, "ploidy")
     return(gen_alleleno)
 }

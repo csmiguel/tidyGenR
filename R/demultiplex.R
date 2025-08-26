@@ -152,20 +152,15 @@ demultiplex <- function(interpreter = "/bin/bash",
         system2("chmod", args = c("+x", sh_out))
         message("Running cutadapt...")
         system(normalizePath(sh_out))
-        message("Demultiplexing using primers from:")
-        message(c(
-            length(primers$locus),
-            "loci: ",
-            paste(primers$locus,
-                collapse = " "
-            )
-        ))
-        message("\nSamples demultiplexed:")
-        message(c(
-            length(samples),
-            " samples: ",
-            paste(samples, collapse = " ")
-        ))
+        message("Demultiplexing using primers from ",
+                length(primers$locus),
+                "loci:\n",
+                paste(primers$locus,
+                      collapse = " "))
+        message("\n A total of ",
+                length(samples),
+                " samples demultiplexed:\n",
+                paste(samples, collapse = " "))
         message(
             "\nInto individual fastq.gz ",
             "files 'sample.locus.[1|2].fastq.gz' and written to:"

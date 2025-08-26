@@ -182,8 +182,11 @@ check_names_demultiplexed <- function(in_dir,
 check_fr_files <- function(fw_files,
                            rv_files,
                            sample_locus,
-                           allpaired = "All F/R files match",
-                           not_paired = "Not all F/R files match") {
+                           allpaired = "All F/R file names match.",
+                           not_paired = "Not all F/R file names match.") {
+  if(identical(fw_files, rv_files)) {
+    stop("F and R file names provided are the same")
+  }
     h <- basename(fw_files)
     hh <- sort(str_extract(h, sample_locus))
     hr <- basename(rv_files)
@@ -196,7 +199,7 @@ check_fr_files <- function(fw_files,
         message(allpaired)
 
         hh_files <- paste(hh, collapse = ", ")
-        message("Files with F/R reads: ", hh_files, "\n")
+        message("Files with F/R reads:\n", hh_files, "\n")
     }
 }
 

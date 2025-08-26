@@ -99,7 +99,7 @@ loci names.
 Each cell contains genotypes in the \emph{A/B} format.
 }
 
-For the \emph{STRUCTURE} format, -9' are introduced as missing data in
+For the \emph{STRUCTURE} format, '-9' are introduced as missing data in
 STRUCTURE output.
 Ploidy is detected automatically from 'allele_no'.
 NAs are introduced if no allele_no found.

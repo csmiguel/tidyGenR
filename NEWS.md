@@ -1,5 +1,9 @@
 # tidyGenR News
 
+## tidyGenR 0.1.2 (2025-08-26)
+- updated 'gen_wide2structure()'. 'tidyr::separate_longer_delim()' could not handle correctly NA's and the code was replaced with base R.
+- 'ploidy' attribute is kept for genotype conversions.
+
 ## tidyGenR 0.1.1 (2025-08-08)
 - Update NEWs and README.
 
