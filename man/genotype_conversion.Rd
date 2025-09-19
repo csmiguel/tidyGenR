@@ -20,13 +20,7 @@ gen_wide2structure(gen, write_out, popdata = FALSE, delim = "/")
 
 gen_tidy2integers(gen)
 
-gen_tidy2genalex(
-  gen,
-  ploidy = 2,
-  popdata = FALSE,
-  write_out,
-  data_name = "dataset1"
-)
+gen_tidy2genalex(gen, popdata, write_out, data_name = "dataset1")
 }
 \arguments{
 \item{gen}{Genotypes: 'tidy' in 'gen_tidy2compact()', 'gen_tidy2wide()',
@@ -45,8 +39,6 @@ In 'gen_tidy2genalex', genotypes are written to tab-delimited
 Populations are added to STRUCTURE output.
 If FALSE (Default), popdata is not added to STRUCTURE output.
 Mandatory in 'gen_tidy2genalex'.}
-
-\item{ploidy}{Genotypes ploidy in 'gen' (only for 'gen_tidy2genalex()').}
 
 \item{data_name}{Name of dataset to print to GENALEX xlsx.}
 }
@@ -96,15 +88,14 @@ All other column metadata is lost.
 dataframe.
 The first column \emph{samples}, contain sample names. All other columns contain
 loci names.
-Each cell contains genotypes in the \emph{A/B} format.
+Each cell contains genotypes in the \emph{A/B} format. Diploid genotypes are
+coded as \emph{A/B}. Cells with missing data have \emph{NA_character}.
 }
 
 For the \emph{STRUCTURE} format, '-9' are introduced as missing data in
-STRUCTURE output.
-Ploidy is detected automatically from 'allele_no'.
-NAs are introduced if no allele_no found.
-POPULATION of origin of the sample or other grouping factor such as SPECIES,
-are treated as follows:
+STRUCTURE output. In hemizygous calls \emph{A}, the missing allele is encoded as
+missing data \emph{-9}.
+Ploidy is retrieved from \emph{attributes}. Only, diploid genotypes are allowed.
 }
 \examples{
 data("genotypes")

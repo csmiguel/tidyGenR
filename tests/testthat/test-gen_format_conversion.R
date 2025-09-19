@@ -67,13 +67,11 @@ test_that("genalex file is formatted correctly:", {
         ))
     expect_no_error(
         gen_tidy2genalex(genotypes,
-            ploidy = 2,
             popdata = meta,
             write_out = glx_txt
         )
     )
     expect_no_error(gen_tidy2genalex(genotypes,
-        ploidy = 2,
         popdata = meta,
         write_out = glx_xlsx
     ))

@@ -21,9 +21,8 @@ test_that("default works", {
     # length is ok
     expect_equal(length(ed), 5L)
     # classes are ok
-    klas <-
-        as.character(vapply(ed, function(x) tail(class(x), 1), character(1)))
-    expect_equal(klas, c("data.frame", rep("ggplot", 4)))
+    expect_true(inherits(ed[[1]], "data.frame"))
+    expect_true(all(sapply(2:5, function(i) inherits(ed[[i]], "ggplot"))))
     # tidy dada names are ok
     expect_equal(names(ed$tidy_dada), c(
         "sample", "locus", "sequence",

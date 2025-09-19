@@ -23,5 +23,6 @@ remove_hemizygotes <- function(gen) {
                 x
             }
         })
+    attr(z, "ploidy") <- attr(gen, "ploidy")
     return(as_tibble(z))
 }

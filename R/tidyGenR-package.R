@@ -17,7 +17,7 @@
 #' @importFrom ShortRead countFastq
 #' @importFrom stats as.dist cmdscale loess predict reorder setNames
 #' @importFrom stringr str_extract str_extract_all str_pad str_remove
-#'  str_remove_all str_split str_which
+#'  str_remove_all str_split str_which str_split_i
 #' @importFrom tibble as_tibble column_to_rownames rownames_to_column tibble
 #' @importFrom tidyr as_tibble drop_na pivot_longer pivot_wider replace_na
 #'  separate_longer_delim separate_wider_delim unite

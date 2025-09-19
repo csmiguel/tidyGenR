@@ -1,4 +1,7 @@
 # tidyGenR News
+## tidyGenR 0.1.3 (2025-08-26)
+- updated 'gen_wide2genalex()'. 'tidyr::separate_wider_delim()' replaced with base R code.
+- 'ploidy' attribute is kept for remove_hemizygotes
 
 ## tidyGenR 0.1.2 (2025-08-26)
 - updated 'gen_wide2structure()'. 'tidyr::separate_longer_delim()' could not handle correctly NA's and the code was replaced with base R.

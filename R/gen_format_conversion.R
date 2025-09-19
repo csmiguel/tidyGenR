@@ -12,7 +12,6 @@
 #' Populations are added to STRUCTURE output.
 #'  If FALSE (Default), popdata is not added to STRUCTURE output.
 #' Mandatory in 'gen_tidy2genalex'.
-#' @param ploidy Genotypes ploidy in 'gen' (only for 'gen_tidy2genalex()').
 #' @param delim Allele delimiter in genotype calls. Default "/". E.x. "AA/BB".
 #' @param data_name Name of dataset to print to GENALEX xlsx.
 #' @name genotype_conversion
@@ -46,14 +45,14 @@
 #'  dataframe.
 #'  The first column *samples*, contain sample names. All other columns contain
 #'  loci names.
-#'  Each cell contains genotypes in the *A/B* format.
+#'  Each cell contains genotypes in the *A/B* format. Diploid genotypes are
+#'  coded as *A/B*. Cells with missing data have *NA_character*.
 #'
 #' For the *STRUCTURE* format, '-9' are introduced as missing data in
-#' STRUCTURE output.
-#' Ploidy is detected automatically from 'allele_no'.
-#' NAs are introduced if no allele_no found.
-#' POPULATION of origin of the sample or other grouping factor such as SPECIES,
-#'  are treated as follows:
+#' STRUCTURE output. In hemizygous calls *A*, the missing allele is encoded as
+#' missing data *-9*.
+#' Ploidy is retrieved from *attributes*. Only, diploid genotypes are allowed.
+#'
 #' @return
 #' - *gen_tidy2compact*, *compact* genotypes with at least 'sample' ,'locus'
 #'  and 'genotype' columns.
@@ -216,33 +215,53 @@ gen_tidy2integers <- function(gen) {
             x$allele <- as.integer(as.factor(x$allele))
             return(x)
         })
+    attr(z, "ploidy") <- attr(gen, "ploidy")
     return(tibble(z))
 }
 
 #' @rdname genotype_conversion
 #' @export
-gen_tidy2genalex <- function(gen, ploidy = 2,
-                             popdata = FALSE,
+gen_tidy2genalex <- function(gen,
+                             popdata,
                              write_out,
                              data_name = "dataset1") {
-    # Check if the detected ploidy matches the set ploidy
-    stopifnot(
-        guess_ploidy(gen) == ploidy,
-        !isFALSE(popdata),
-        "data.frame" %in% class(popdata),
-        all(c("sample", "population") %in% names(popdata))
-    )
-    # remove hemizygotes (if not it will cause errors in GENALEX)
-    # and recode allele names as intergers for GENALEX.
+  # only works for diploid data
+  if(isTRUE(attr(gen, "ploidy") == 2)) {
+    message("Ploidy attribute in genotypes is set to 2.")
+  } else {
+    stop("The genotypes must have a 'ploidy' of 2 in their attributes: attr(gen, 'ploidy') == 2.")
+  }
+  warning("'gen_tidy2genalex' assumes diploid codominant markers.")
+  # dataframe with sample + pop
+  if (inherits(popdata, "data.frame")) {
+    test_1 <- all(c("sample", "population") %in% names(popdata))
+    if (!test_1) {
+      stop(
+        "'popdata' must have a column named 'sample' matching genotype samples",
+        "and another column named 'population'")
+    } else {
+      message("popdata is formatted correctly.")
+    }
+    }
+    # remove hemizygotes. They will cause errors in GENALEX.
+    # and recode allele names as integers for GENALEX.
     v <- gen_tidy2wide(gen_tidy2integers(remove_hemizygotes(gen)))
+    warning("Hemizygotes are removed from tidy genotypes because GENALEX cannot",
+    " handle mixed diploid/haploid genotypes for the same marker")
     w <- column_to_rownames(v, "sample")
     # 2 cols per locus
     gen2col <-
-        separate_wider_delim(w,
-            cols = everything(),
-            delim = "/", names_sep = "_",
-            too_few = "align_start"
-        )
+      seq_len(ncol(w)) |>
+      plyr::alply(1, function(i) {
+        x <- w[, i]
+        name_x <- names(w)[i]
+        df_i <-
+          data.frame(str_split_i(x, "//?", 1),
+                     str_split_i(x, "//?", 2))
+        names(df_i) <- paste(name_x, c("a", "b"), sep = "_")
+        df_i
+      }) |>
+      bind_cols()
     # replace NAs with '0'. Genalex codes missing data as '0' for codominant data
     # and as '-1' for binary data.
     gen2col[is.na(gen2col)] <- "0"

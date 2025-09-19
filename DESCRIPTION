@@ -1,6 +1,6 @@
 Package: tidyGenR
 Title: Tidy multilocus amplicon genotypes in R
-Version: 0.1.2
+Version: 0.1.3
 Authors@R: c(
     person("Miguel", "Camacho", , "miguelcamachosanchez@gmail.com", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0002-6385-7963")),
