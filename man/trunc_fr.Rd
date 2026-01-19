@@ -12,9 +12,6 @@ Data frame with three columns:
 \item{trunc_r}{Truncation length for reverse reads.}
 }
 }
-\usage{
-trunc_fr
-}
 \description{
 Truncation lengths for forward and reverse reads for
 the dataset containing 30 primer pairs used to amplify intron loci in

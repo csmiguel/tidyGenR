@@ -1,6 +1,6 @@
 Package: tidyGenR
 Title: Tidy multilocus amplicon genotypes in R
-Version: 0.1.3
+Version: 0.1.4
 Authors@R: c(
     person("Miguel", "Camacho", , "miguelcamachosanchez@gmail.com", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0002-6385-7963")),
@@ -52,7 +52,7 @@ LazyData: false
 NeedsCompilation: no
 Packaged: 2024-05-15 15:26:07 UTC
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 SystemRequirements: cutadapt >=2.0 (https://cutadapt.readthedocs.io/en/stable/)
 Config/testthat/edition: 3
 VignetteBuilder: knitr

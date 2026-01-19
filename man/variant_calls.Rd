@@ -14,9 +14,6 @@ A list of 5 dataframes.
 \item{amplisas}{AmpliSAT}
 }
 }
-\usage{
-variant_calls
-}
 \description{
 List of 5 tidy variants dataframes with variant calls using
 different strategies.

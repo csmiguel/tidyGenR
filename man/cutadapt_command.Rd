@@ -22,7 +22,21 @@ cutadapt_command(
 )
 }
 \arguments{
-\item{samples_file}{Text file with samples names.}
+\item{mode}{"pe", paired-end; "se", single-end; or "linked" (beta, non-tested),
+for linked primers.}
+
+\item{interpreter}{Path to interpreter.}
+
+\item{samples_file}{Text file with sample names.}
+
+\item{cutadapt}{Path to cutadapt executable.}
+
+\item{extraArgs}{Other arguments for cutadapt (eg "--max-n 0
+--max-expected-errors 3 --minimum-length=20").}
+
+\item{overlap}{--overlap (see cutadapt documentation).}
+
+\item{e}{-e (see cutadapt documentation).}
 
 \item{g}{Fasta file with forward primers.}
 
@@ -35,6 +49,8 @@ cutadapt_command(
 \item{readsfw}{Path to input forward reads.}
 
 \item{readsrv}{Path to input reverse reads.}
+
+\item{log_out}{Path to write cutadapt log file.}
 }
 \value{
 cutadapt command based on the 'mode" ('pe', 'se', 'linked').

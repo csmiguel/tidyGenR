@@ -106,7 +106,10 @@ demultiplex <- function(interpreter = "/bin/bash",
             linked_primers[i] <-
                 paste0(
                     ">", primers$locus[i], "\n",
-                    primers$fw[i], "...", primers$rv[i], "\n"
+                    primers$fw[i], "...",
+                    DNAString(primers$rv[i]) |>
+                      reverseComplement() |>
+                      as.character(), "\n"
                 )
         }
         writeLines(linked_primers, con = fwf, sep = "")
@@ -170,13 +173,22 @@ demultiplex <- function(interpreter = "/bin/bash",
 }
 
 #' Create cutadapt command
-#' @param samples_file Text file with samples names.
+#' @param mode "pe", paired-end; "se", single-end; or "linked" (beta, non-tested),
+#' for linked primers.
+#' @param interpreter Path to interpreter.
+#' @param samples_file Text file with sample names.
+#' @param cutadapt Path to cutadapt executable.
+#' @param extraArgs Other arguments for cutadapt (eg "--max-n 0
+#' --max-expected-errors 3 --minimum-length=20").
+#' @param overlap --overlap (see cutadapt documentation).
+#' @param e -e (see cutadapt documentation).
 #' @param g Fasta file with forward primers.
 #' @param G Fasta file with reverse primers.
 #' @param o Path to demultiplexed forward reads.
 #' @param p Path to demultiplexed reverse reads.
 #' @param readsfw Path to input forward reads.
 #' @param readsrv Path to input reverse reads.
+#' @param log_out Path to write cutadapt log file.
 #' @return cutadapt command based on the 'mode" ('pe', 'se', 'linked').
 cutadapt_command <- function(mode,
                              interpreter,

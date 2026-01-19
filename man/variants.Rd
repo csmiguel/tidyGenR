@@ -16,9 +16,6 @@ tidy dataframe or tibble.
 \item{sequence}{DNA sequence of allele.}
 }
 }
-\usage{
-variants
-}
 \description{
 Filtered tidy variants of \emph{Rattus baluensis} from Trusmadi
 (Camacho-Sanchez et al. \emph{in preparation}),

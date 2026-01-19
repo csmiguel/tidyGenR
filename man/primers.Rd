@@ -12,8 +12,8 @@ A data frame with 27 rows and 3 variables.
 \item{rv}{5' to 3' reverse primer sequence.}
 }
 }
-\usage{
-primers
+\source{
+Igea et al. (2010); Camacho-Sanchez et al. (2018).
 }
 \description{
 A dataframe containing 27 primer pairs used to amplify intron loci in

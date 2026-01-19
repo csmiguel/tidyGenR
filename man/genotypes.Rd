@@ -17,9 +17,6 @@ tidy dataframe or tibble.
 \item{sequence}{DNA sequence of allele.}
 }
 }
-\usage{
-genotypes
-}
 \description{
 Filtered genotypes of 20 loci and 91 samples of \emph{Rattus baluensis} used in
 Camacho-Sanchez et al. \emph{in preparation}.

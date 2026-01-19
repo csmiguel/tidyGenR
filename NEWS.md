@@ -1,4 +1,6 @@
 # tidyGenR News
+## tidyGenR 0.1.4 (2026-01-16)
+- 'demultiplex(mode = 'linked')' has been tested with real data. The R primers needed to be reverse-complemented. Fixed.
 ## tidyGenR 0.1.3 (2025-08-26)
 - updated 'gen_wide2genalex()'. 'tidyr::separate_wider_delim()' replaced with base R code.
 - 'ploidy' attribute is kept for remove_hemizygotes

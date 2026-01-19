@@ -83,11 +83,11 @@ check_primers <- function(x) {
 
 #' Evaluate if all demultiplexed-by-locus-and-sample sequencing files
 #'  meet the required format for
-#' input in  the function 'trunc_amp'. That is: "sample.locus.[1|2].fastq.gz".
+#' input in  the function 'trunc_amp'. That is: "sample.locus.\[1|2\].fastq.gz".
 #' Evaluates if all characters in a string are alphanumeric
 #'
 #' @param ... other arguments from the environment.
-#' @returns A list of [1] samples and [2] loci detected.
+#' @returns A list of \[1\] samples and \[2\] loci detected.
 #' Stops if sample names do not conform the required format.
 #' @noRd
 #' @rdname truncate

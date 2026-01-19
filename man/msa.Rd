@@ -7,9 +7,6 @@
 \format{
 DNAStringSet with 179 aligned sequences.
 }
-\usage{
-msa
-}
 \description{
 Multiple sequence alignment stored as Biostrings 'DNAStringSet'
 from locus tmem87a from \emph{Rattus baluensis}.

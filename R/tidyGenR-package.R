@@ -4,7 +4,7 @@
 ## usethis namespace: start#
 #' @import dplyr ggplot2 patchwork
 #' @importFrom Biostrings DNAString DNAStringSet matchPattern readDNAStringSet
-#'  width writeXStringSet
+#'  width writeXStringSet reverseComplement
 #' @importFrom dada2 dada derepFastq filterAndTrim getDadaOpt learnErrors
 #'  loessErrfun makeSequenceTable mergePairs plotQualityProfile
 #'  removeBimeraDenovo

@@ -2,6 +2,17 @@
 #'
 #' A dataframe containing 27 primer pairs used to amplify intron loci in
 #' *Rattus baluensis* (Igea et al. 2010; Camacho-Sanchez et al. 2018).
+
+#' @format A data frame with 27 rows and 3 variables.
+#' \describe{
+#'   \item{locus}{Locus name.}
+#'   \item{fw}{5' to 3' forward primer sequence.}
+#'   \item{rv}{5' to 3' reverse primer sequence.}
+#' }
+#' @name primers
+#' @source
+#' Igea et al. (2010); Camacho-Sanchez et al. (2018).
+#'
 #' @references
 #' Camacho-Sanchez et al. (2018). _Interglacial refugia on tropical
 #' mountains: novel insights from the summit rat (<i>Rattus baluensis</i>),
@@ -9,13 +20,10 @@
 #'
 #' Igea et al. (2010) _Novel intron markers to study the phylogeny of
 #' closely related mammalian species_. BMC Evolutionary Biology.
-#' @format A data frame with 27 rows and 3 variables.
-#' \describe{
-#'   \item{locus}{Locus name.}
-#'   \item{fw}{5' to 3' forward primer sequence.}
-#'   \item{rv}{5' to 3' reverse primer sequence.}
-#' }
-"primers"
+#'
+#' @docType data
+#' @keywords datasets
+NULL
 
 #' Variants
 #'
@@ -32,7 +40,10 @@
 #'   \item{md5}{MD5 checksum of allele sequence.}
 #'   \item{sequence}{DNA sequence of allele.}
 #' }
-"variants"
+#' @name variants
+#' @docType data
+#' @keywords datasets
+NULL
 
 #' Per-locus truncation lengths for forward and reverse reads.
 #'
@@ -46,7 +57,10 @@
 #'   \item{trunc_f}{Truncation length for forward reads.}
 #'   \item{trunc_r}{Truncation length for reverse reads.}
 #' }
-"trunc_fr"
+#' @name trunc_fr
+#' @docType data
+#' @keywords datasets
+NULL
 
 #' Genotypes
 #'
@@ -64,14 +78,20 @@
 #'   \item{md5}{MD5 hash of allele sequence.}
 #'   \item{sequence}{DNA sequence of allele.}
 #' }
-"genotypes"
+#' @name genotypes
+#' @docType data
+#' @keywords datasets
+NULL
 
 #' List of dataframes with _qvalues_.
 #'
 #' List of 6 dataframes with 91 samples containing q-ancestry values
 #' from STRUCTURE runs.
 #' @format A list of 6 dataframes with 91 rows.
-"qlist"
+#' @name qlist
+#' @docType data
+#' @keywords datasets
+NULL
 
 #' List of tidy variants
 #'
@@ -85,11 +105,19 @@
 #'   \item{pool_bs0}{pool = T; band_size = 0}
 #'   \item{amplisas}{AmpliSAT}
 #' }
-"variant_calls"
+#' @name variant_calls
+#' @docType data
+#' @keywords datasets
+NULL
 
 #' MSA from locus tmem87a
 #'
 #' Multiple sequence alignment stored as Biostrings 'DNAStringSet'
 #' from locus tmem87a from _Rattus baluensis_.
 #' @format DNAStringSet with 179 aligned sequences.
-"msa"
+#' @name msa
+#' @docType data
+#' @keywords datasets
+NULL
+
+

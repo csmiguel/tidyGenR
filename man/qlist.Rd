@@ -7,9 +7,6 @@
 \format{
 A list of 6 dataframes with 91 rows.
 }
-\usage{
-qlist
-}
 \description{
 List of 6 dataframes with 91 samples containing q-ancestry values
 from STRUCTURE runs.
