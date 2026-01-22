@@ -87,12 +87,11 @@ variant_call_dada <- function(
             verbose = TRUE,
             OMEGA_A = omega_a_f,
             BAND_SIZE = band_size
-        )
+        ) |>
+      dada2list(names = basename(fw_fq))
     seqtab <-
         makeSequenceTable(dada_fw)
     # check at least a sample has reads after dada
-    # if only one sample dada output is not a list. So, convert to list
-    dada_fw <- dada2list(dada_fw, names = basename(fw_fq))
     z <-
         vapply(dada_fw, function(x) sum(x$clustering$abundance), numeric(1))
     if (!sum(z) > 0) {

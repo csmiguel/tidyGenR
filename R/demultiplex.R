@@ -157,7 +157,7 @@ demultiplex <- function(interpreter = "/bin/bash",
         system(normalizePath(sh_out))
         message("Demultiplexing using primers from ",
                 length(primers$locus),
-                "loci:\n",
+                " loci:\n",
                 paste(primers$locus,
                       collapse = " "))
         message("\n A total of ",
