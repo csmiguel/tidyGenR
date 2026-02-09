@@ -45,7 +45,7 @@ columns. If 'se', 'trunc_r' values are ignored.
 \item{outdir}{Path where filtered reads are written. Created if it does
 not exist.}
 
-\item{filt_name}{Pattern to append to FASTA names: '{sample}_{locus}{filt_name}'.}
+\item{filt_name}{Pattern to append to FASTA names: '\{sample\}_\{locus\}\{filt_name\}'.}
 
 \item{mode_trun}{'se': single-end; 'pe', paired-end.}
 

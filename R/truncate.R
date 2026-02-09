@@ -20,7 +20,7 @@
 #'  columns. If 'se', 'trunc_r' values are ignored.
 #' @param outdir Path where filtered reads are written. Created if it does
 #'  not exist.
-#' @param filt_name Pattern to append to FASTA names: '{sample}_{locus}{filt_name}'.
+#' @param filt_name Pattern to append to FASTA names: '\{sample\}_\{locus\}\{filt_name\}'.
 #' @param mode_trun 'se': single-end; 'pe', paired-end.
 #' @param multithread T/F, see 'filterAndTrim()'.
 #' @param max_ee Maximum expected errors. See 'filterAndTrim()'.
