@@ -32,7 +32,7 @@ library(tidyGenR)
 
 # Input raw sequences
 
-The raw and processed data used in this vignette come from amplicon libraries of *Rattus baluensis* (Camacho-Sanchez et al. *submitted*).
+The raw and processed data used in this vignette come from amplicon libraries of *Rattus baluensis* (Camacho-Sanchez et al. 2026).
 
 Naming of FASTQ must meet a given format.
 

@@ -1,0 +1,95 @@
+---
+title: "Optimization of variant calling"
+author: "Miguel Camacho-Sanchez"
+output:
+  BiocStyle::html_document
+vignette: >
+  %\VignetteIndexEntry{tidyGenR-optimization}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Introduction
+
+```{r style, echo = FALSE, results = 'asis'}
+BiocStyle::markdown()
+```
+
+```{r options, include = FALSE}
+knitr::opts_chunk$set(
+    collapse = TRUE,
+    comment = "#>"
+)
+```
+
+The function `variant_call()` initiates a workflow of multiple functions from *DADA2.* Initially, _DADA2_ was developed for denoising metabarcoding reads from environmental samples where a high number of ASVs from different species are expected. Thus, default *DADA2* parameters aim to maximize true positives while minimizing false positives (artifacts) and false negatives (true variants classified as artifacts) in metagenomic samples (Callahan et al., 2016; Rosen et al., 2012). However, *tidyGenR* will likely be used in many cases for determining amplicon variants in diploid species, as in vertebrates. For diploids, a maximum of two variants per locus are expected. This scenario justifies exploring how "child" variants are classified by _DADA2_.
+
+`birth_pval` is the probability of variant being classified in its parent group given the error model. When `birth_pval` \< `OMEGA_A` the child variant is promoted to its own cluster.
+
+The pior knowledge of a maximum of 2 alleles per locus for diploids can be used to explore `OMEGA_A` and read frequency thresholds. These can be edited to maximize the number of "true" variants (true positives) while minimizing the risk of calling artifacts as real alleles.
+
+```{r setup}
+library(tidyGenR)
+```
+
+# explore_dada()
+
+The function `explore_dada()` permits to run *DADA2* under testing parameters. It is recommended to run it with a high value of 'OMEGA_A'. Under such a high threshold most variants will have a lower `birth_pval` and will form their own cluster. This allows the user to visually determine what thresholds will work best for their given dataset.
+
+```{r, results = 'hide'}
+fq <-
+ list.files(system.file("extdata", "truncated",
+                        package = "tidyGenR"),
+                        pattern = "F_filt.fastq.gz",
+            full.names = TRUE)
+ex_d <-
+  explore_dada(fq,
+    value_na = 10,
+    reduced = TRUE,
+    pool = FALSE,
+    vline = 2,
+    hline_fr = 0.1,
+    omega_a = 0.9,
+    band_size = 16
+    )
+```
+
+```{r}
+ex_d$p3
+```
+
+In this case, the minimum `log(-log(birth_pval))` for the less frequent allele is around 4, meaning that a threshold of `log(-log(birth_pval)) < 4` would be necessary to recover all variants in the sequence dataset. A `log(-log(birth_pval))` of 4 implies a `birth_pval` of approximately\ $\exp(-\exp(4)) \approx 1.9 \times 10^{-24}$,\ indicating an extremely low probability that such a variant arises as an error from its parent sequence under the *DADA2* error model.
+
+# compare_calls()
+
+Variant calls with different parameters can be compared with `compare_calls()`. For this example, two runs with different thresholds of `OMEGA_A` are compared. From the `explore_dada()` results above, it can be concluded that a `log(-log(birth_pval))` of 6 will leave out some variants for `chrna9` and `nfkbia`.
+
+```{r, results='hide'}
+# path to fastq
+truncated <-
+ system.file("extdata", "truncated", package = "tidyGenR")
+
+# variant calling
+
+omega_a_test <- c(relaxed = 4, restrictive = 6)
+
+variants_called <-
+  omega_a_test |>
+    lapply(function(x) {
+    variant_call(in_dir = truncated,
+                 omega_a_f = exp(-exp(x)),
+                 band_size = 16,
+                 maf = 0.1
+                 )
+    })
+
+# compare calls
+comp_call <- 
+  compare_calls(variants_called)
+```
+
+```{r}
+comp_call$plot2
+```
+
+It can be appreciated that in the restrictive call some variants are missing compared to the relaxed calling. Other outputs are produced. See `str(comp_call)` and `?compare_calls()` for more information.

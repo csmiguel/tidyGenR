@@ -15,6 +15,6 @@ Data frame with three columns:
 \description{
 Truncation lengths for forward and reverse reads for
 the dataset containing 30 primer pairs used to amplify intron loci in
-\emph{Rattus baluensis} (Camacho-Sanchez et al. \emph{in preparation}).
+\emph{Rattus baluensis} (Camacho-Sanchez et al. 2026).
 }
 \keyword{datasets}

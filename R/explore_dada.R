@@ -31,7 +31,7 @@
 #' @references
 #' Rosen et al. (2012). _Denoising PCR-amplified metagenome data_.
 #'  BMC Bioinformatics, 13(1).
-#' @param fs Character vector with paths to FASTQ files.
+#' @param fs Character vector with full paths to FASTQ files.
 #' @param sample_locus Regex expression with groups to extract sample (group 1)
 #'  and loci (group 2) from "(^\[a-zA-Z0-9\]*)_(\[a-zA-Z0-9\]*)".
 #' @param value_na Numeric to replace 'NA' or infinite values assigned to 'pval'
@@ -198,9 +198,8 @@ explore_dada <- function(fs,
         )) +
         geom_point() +
         scale_x_continuous(
-            transform = "log2",
-            breaks = c(1, 10, 100, 1000, 10000)
-        ) +
+            trans = "log2"
+            ) +
         geom_hline(
             yintercept = hline_fr, linewidth = 1,
             linetype = "dotted", color = "grey"

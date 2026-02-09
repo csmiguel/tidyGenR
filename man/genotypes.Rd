@@ -19,6 +19,6 @@ tidy dataframe or tibble.
 }
 \description{
 Filtered genotypes of 20 loci and 91 samples of \emph{Rattus baluensis} used in
-Camacho-Sanchez et al. \emph{in preparation}.
+Camacho-Sanchez et al. (2026).
 }
 \keyword{datasets}

@@ -18,7 +18,7 @@ explore_dada(
 )
 }
 \arguments{
-\item{fs}{Character vector with paths to FASTQ files.}
+\item{fs}{Character vector with full paths to FASTQ files.}
 
 \item{sample_locus}{Regex expression with groups to extract sample (group 1)
 and loci (group 2) from "(^[a-zA-Z0-9]\emph{)_([a-zA-Z0-9]})".}

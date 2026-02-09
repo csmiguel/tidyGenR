@@ -20,6 +20,7 @@
 #'  columns. If 'se', 'trunc_r' values are ignored.
 #' @param outdir Path where filtered reads are written. Created if it does
 #'  not exist.
+#' @param filt_name Pattern to append to FASTA names: '{sample}_{locus}{filt_name}'.
 #' @param mode_trun 'se': single-end; 'pe', paired-end.
 #' @param multithread T/F, see 'filterAndTrim()'.
 #' @param max_ee Maximum expected errors. See 'filterAndTrim()'.
@@ -56,6 +57,7 @@ trunc_amp <- function(loci = NULL,
                       in_dir, trunc_fr,
                       fw_pattern, rv_pattern = NULL,
                       outdir = "truncated",
+                      filt_name = "_F_filt.fastq.gz",
                       mode_trun = "pe", multithread = FALSE,
                       max_ee = 3, trunc_q = 2) {
     stopifnot(dir.exists(in_dir))
@@ -78,7 +80,7 @@ trunc_amp <- function(loci = NULL,
                     pattern = fw_pattern,
                     in_dir = in_dir,
                     outdir = outdir,
-                    filt_pattern = "_F_filt.fastq.gz"
+                    filt_pattern = filt_name
                 )
             # check there are input reads
             if (length(fws$infiles) == 0)

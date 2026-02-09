@@ -28,7 +28,7 @@ NULL
 #' Variants
 #'
 #' Filtered tidy variants of *Rattus baluensis* from Trusmadi
-#' (Camacho-Sanchez et al. _in preparation_),
+#' (Camacho-Sanchez et al. 2026),
 #' corresponding to 27 loci from 44 samples.
 #' @format tidy dataframe or tibble.
 #' \describe{
@@ -49,7 +49,7 @@ NULL
 #'
 #' Truncation lengths for forward and reverse reads for
 #' the dataset containing 30 primer pairs used to amplify intron loci in
-#' *Rattus baluensis* (Camacho-Sanchez et al. _in preparation_).
+#' *Rattus baluensis* (Camacho-Sanchez et al. 2026).
 #'
 #' @format Data frame with three columns:
 #' \describe{
@@ -65,7 +65,7 @@ NULL
 #' Genotypes
 #'
 #' Filtered genotypes of 20 loci and 91 samples of *Rattus baluensis* used in
-#'  Camacho-Sanchez et al. _in preparation_.
+#'  Camacho-Sanchez et al. (2026).
 #'
 #' @format tidy dataframe or tibble.
 #' \describe{

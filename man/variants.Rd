@@ -18,7 +18,7 @@ tidy dataframe or tibble.
 }
 \description{
 Filtered tidy variants of \emph{Rattus baluensis} from Trusmadi
-(Camacho-Sanchez et al. \emph{in preparation}),
+(Camacho-Sanchez et al. 2026),
 corresponding to 27 loci from 44 samples.
 }
 \keyword{datasets}
