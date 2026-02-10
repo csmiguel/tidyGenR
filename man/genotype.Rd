@@ -38,7 +38,7 @@ No ADt filter is applied.
 }
 \examples{
 data("variants")
-genotype(variants,
+genotype(variants[1:100,],
     ADt = 10, ploidy = 2
 )
 }

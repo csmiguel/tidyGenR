@@ -69,14 +69,16 @@
 #' gen_tidy2wide(genotypes)
 #' gen_tidy2integers(genotypes)
 #' # read metadata for sample populations
+#' gen_str <- tempfile(fileext = ".str")
 #' meta <-
 #'     read.csv(system.file("extdata/metadata.csv", package = "tidyGenR"))
 #' gen_wide2structure(gen_tidy2wide(genotypes),
-#'     write_out = "genotypes.str", popdata = meta
+#'     write_out = gen_str, popdata = meta
 #' )
+#' genalex_txt <- tempfile(fileext = ".txt")
 #' gen_tidy2genalex(genotypes,
 #'     popdata = meta,
-#'     write_out = "dataset1.txt",
+#'     write_out = genalex_txt,
 #' )
 #' @export
 gen_tidy2compact <- function(gen, delim = "/") {

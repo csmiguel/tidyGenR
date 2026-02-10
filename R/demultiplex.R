@@ -40,8 +40,10 @@
 #'                         package = "tidyGenR"),
 #'                         pattern = "2.fastq.gz",
 #'             full.names = TRUE)
+#' dem_sh <- tempfile(fileext = ".sh")
 #' demultiplex(
 #'     cutadapt = "cutadapt",
+#'     sh_out = dem_sh,
 #'     freads = freads,
 #'     rreads = rreads,
 #'     primers = primers,

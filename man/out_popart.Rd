@@ -35,8 +35,9 @@ y <-
 msa <-
     tidy2sequences(y, fasta_header = "{sname}") |>
     DECIPHER::AlignSeqs()
+outnex <- tempfile(fileext = ".nex")
 out_popart(msa, y,
-    outnex = "abcg8.nex",
+    outnex = outnex,
     sname = "sname",
     xgroups = "sample",
     blocks = c("DATA", "TRAITS")

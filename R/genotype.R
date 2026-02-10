@@ -12,7 +12,7 @@
 #' @param ADt Threshold of AD to discriminate hemi/homo-zygotes.
 #' @examples
 #' data("variants")
-#' genotype(variants,
+#' genotype(variants[1:100,],
 #'     ADt = 10, ploidy = 2
 #' )
 #' @export

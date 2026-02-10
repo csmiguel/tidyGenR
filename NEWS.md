@@ -1,9 +1,12 @@
 # tidyGenR News
 
-## tidyGenR 0.1.6 (2026-xx-xx)
+## tidyGenR 0.1.6 (2026-02-10)
+- submitted to CRAN.
 - trunc_amp(), includes 'filt_name' argument to add flexibility to output filtered names.
 - x-axis scale has changed in 'explore_dada()'
 - optimization vignette added.
+- 'out_popart()' internal 'write_delim(quote)' changed to "none".
+- replace absolute paths by temp paths in examples.
 
 ## tidyGenR 0.1.5 (2026-01-22)
 - bug fixed in 'variant_call_dada()', dada2 is always converted to list to prevent errors associated to loci in one sample only.

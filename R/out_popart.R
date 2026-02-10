@@ -20,8 +20,9 @@
 #' msa <-
 #'     tidy2sequences(y, fasta_header = "{sname}") |>
 #'     DECIPHER::AlignSeqs()
+#' outnex <- tempfile(fileext = ".nex")
 #' out_popart(msa, y,
-#'     outnex = "abcg8.nex",
+#'     outnex = outnex,
 #'     sname = "sname",
 #'     xgroups = "sample",
 #'     blocks = c("DATA", "TRAITS")
@@ -108,7 +109,7 @@ out_popart <- function(msa,
                 delim = " ",
                 append = TRUE,
                 col_names = FALSE,
-                quote = NULL,
+                quote = "none",
                 progress = FALSE
             ),
             file = CON

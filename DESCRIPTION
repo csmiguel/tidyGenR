@@ -6,7 +6,7 @@ Authors@R: c(
            comment = c(ORCID = "0000-0002-6385-7963")),
     person("Jennifer", "Leonard", role = "fnd")
   )
-Description: package used to determine variants and genotypes from high throughput sequences
+Description: Variant determination and genotyping from high throughput sequences
     from multilocus amplicon libraries, typically sequenced in Illumina MiSeq or similar.
     It provides a set of core functions for the central steps: demultiplex by locus,
     truncate reads, variant calling, and genotype calling. Additionally, it provides a set of functions
