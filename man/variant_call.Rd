@@ -6,7 +6,7 @@
 \usage{
 variant_call(
   loci = NULL,
-  in_dir = NULL,
+  in_dir,
   fw_pattern = "_F_filt.fastq.gz",
   rv_pattern = NULL,
   sample_locus = "(^[a-zA-Z0-9]*).([a-zA-Z0-9]*)",

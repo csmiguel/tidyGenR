@@ -24,6 +24,4 @@ browser.
 Align and view DNA sequences
 Align and view DNA sequences based on \emph{DECIPHER} functions.
 }
-\examples{
-tidyGenR:::view_msa(c("CAAAA", "CAAAT"))
-}
+\keyword{internal}

@@ -24,12 +24,9 @@ the clusters from the first matrix are used as a reference for
 ordering clusters from successive q-matrices
 in the list.
 }
-\examples{
-data("qlist")
-tidyGenR:::align_matrices(qlist)
-}
 \references{
 Pritchard, J. K., Stephens, M., & Donnelly, P. (2000).
 \emph{Inference of population structure using multilocus genotype data}
 Genetics, 155(2), 945-959.
 }
+\keyword{internal}

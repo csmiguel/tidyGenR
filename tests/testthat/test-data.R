@@ -26,20 +26,6 @@ test_that("variant_calls is a list of dataframes formatted correctly", {
     )
 })
 
-test_that("qlist is a list of dataframes", {
-    data("qlist")
-    expect_equal(class(qlist), "list")
-    expect_true(
-        all(vapply(qlist, function(x) "data.frame" %in% class(x), logical(1)))
-    )
-})
-
-test_that("msa is a DNSStringSet", {
-    data("msa")
-    expect_equal(as.character(class(msa)), "DNAStringSet")
-})
-
-
 test_that("trunc_fr is a dataframe with truncation lengths", {
     data("trunc_fr")
     expect_equal(

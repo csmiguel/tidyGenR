@@ -83,16 +83,6 @@ NULL
 #' @keywords datasets
 NULL
 
-#' List of dataframes with _qvalues_.
-#'
-#' List of 6 dataframes with 91 samples containing q-ancestry values
-#' from STRUCTURE runs.
-#' @format A list of 6 dataframes with 91 rows.
-#' @name qlist
-#' @docType data
-#' @keywords datasets
-NULL
-
 #' List of tidy variants
 #'
 #' List of 5 tidy variants dataframes with variant calls using
@@ -109,15 +99,4 @@ NULL
 #' @docType data
 #' @keywords datasets
 NULL
-
-#' MSA from locus tmem87a
-#'
-#' Multiple sequence alignment stored as Biostrings 'DNAStringSet'
-#' from locus tmem87a from _Rattus baluensis_.
-#' @format DNAStringSet with 179 aligned sequences.
-#' @name msa
-#' @docType data
-#' @keywords datasets
-NULL
-
 

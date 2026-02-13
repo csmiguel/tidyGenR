@@ -4,23 +4,29 @@
 \alias{remove_poor_fastq}
 \title{Remove empty FASTQ}
 \usage{
-remove_poor_fastq(path2fastq = NULL, pattern = "fastq.gz", min_reads = 0)
+remove_poor_fastq(path2fastq, pattern = "fastq.gz", min_reads = 0)
 }
 \arguments{
-\item{path2fastq}{Folder with FASTQ files.}
+\item{path2fastq}{Character. Path to the directory containing FASTQ files.}
 
-\item{pattern}{Pattern to match FASTQ files in folder.}
+\item{pattern}{Character. Pattern used to identify FASTQ files in
+\code{path2fastq}.}
 
-\item{min_reads}{FASTQ files with a <= number of reads are deleted.}
+\item{min_reads}{Integer. FASTQ files with a number of reads less than or
+equal to this threshold are removed.}
+}
+\value{
+No return value. Called for its side effects: FASTA/FASTQ files in
+\code{path2fastq} with a number of reads less than or equal to
+\code{min_reads} are removed from disk. Invisibly returns \code{NULL}.
 }
 \description{
-Remove FASTA files with no reads in a given directory.
-It considers both FASTQ and FASTA.
+Removes FASTA/FASTQ files with a number of reads less than or equal to
+\code{min_reads} from a specified directory.
 }
 \examples{
-# create empty FASTQ
-fq <- "no_reads.fastq"
-system2("touch", fq)
-# remove empty fastq
-remove_poor_fastq(".", pattern = "fastq")
+tmp <- tempdir()
+fq <- file.path(tmp, "no_reads.fastq")
+file.create(fq)
+remove_poor_fastq(tmp, pattern = "fastq", min_reads = 0)
 }

@@ -4,22 +4,33 @@
 \alias{out_popart}
 \title{Format MSA and traits for PopArt}
 \usage{
-out_popart(msa, x, blocks = c("DATA", "TRAITS"), sname, xgroups, outnex)
+out_popart(
+  msa,
+  x,
+  blocks = c("DATA", "TRAITS"),
+  sname,
+  xgroups,
+  outnex = tempfile(fileext = ".nex")
+)
 }
 \arguments{
-\item{msa}{Multiple sequence alignment, DNAStringSet or DNAMultipleAlignment.}
+\item{msa}{Multiple sequence alignment as \code{DNAStringSet} or \code{DNAMultipleAlignment}.}
 
 \item{x}{Dataframe with trait data.}
 
-\item{blocks}{NEXUS blocks to add to file. Either "DATA", "TRAITS"
-or c("DATA", "TRAITS").}
+\item{blocks}{NEXUS blocks to add to file. Either \code{"DATA"}, \code{"TRAITS"}
+or \code{c("DATA", "TRAITS")}.}
 
 \item{sname}{Column name in 'x' with sequence names which must be
-identical to sequence names in the MSA.}
+identical to sequence names in \code{msa}.}
 
-\item{xgroups}{Column name in 'x' used for creating groups in TRAITS.}
+\item{xgroups}{Column name in \code{x} used for creating groups in TRAITS.}
 
 \item{outnex}{Path to write NEXUS file.}
+}
+\value{
+No return value. Called for its side effect of writing a NEXUS file to
+\code{outnex}. Invisibly returns \code{NULL}.
 }
 \description{
 It takes a multiple sequence alignment and data to create a NEXUS file
@@ -35,9 +46,7 @@ y <-
 msa <-
     tidy2sequences(y, fasta_header = "{sname}") |>
     DECIPHER::AlignSeqs()
-outnex <- tempfile(fileext = ".nex")
 out_popart(msa, y,
-    outnex = outnex,
     sname = "sname",
     xgroups = "sample",
     blocks = c("DATA", "TRAITS")

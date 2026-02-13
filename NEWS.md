@@ -1,7 +1,11 @@
 # tidyGenR News
 
+## tidyGenR 0.1.7 (2026-02-13)
+- fixed CRAN checks: tempdir and tempfiles for examples and tests, remove examples for internal `:::` functions, add `@value` where missing.
+- remove unused data objects msa and qlist.
+
 ## tidyGenR 0.1.6 (2026-02-10)
-- submitted to CRAN.
+- first submission to CRAN.
 - trunc_amp(), includes 'filt_name' argument to add flexibility to output filtered names.
 - x-axis scale has changed in 'explore_dada()'
 - optimization vignette added.

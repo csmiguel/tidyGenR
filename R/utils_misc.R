@@ -6,8 +6,7 @@
 #' @param ... other parameters passed to 'BrowseSeqs()'.
 #' @return  Biostring object with aligned sequences and display msa in web
 #'  browser.
-#' @examples
-#' tidyGenR:::view_msa(c("CAAAA", "CAAAT"))
+#' @keywords internal
 view_msa <- function(seqs, browse = TRUE, out_bs = TRUE, ...) {
     s <- DNAStringSet(seqs)
     sal <- AlignSeqs(s)
@@ -36,9 +35,7 @@ view_msa <- function(seqs, browse = TRUE, out_bs = TRUE, ...) {
 #'  Genetics, 155(2), 945-959.
 #' @param mat List of dataframes or matrices with q-values.
 #' @return List of dataframes with aligned clusters.
-#' @examples
-#' data("qlist")
-#' tidyGenR:::align_matrices(qlist)
+#' @keywords internal
 align_matrices <- function(mat) {
     # mat, list of matrices
     mat <- lapply(mat, as.matrix)
@@ -91,9 +88,7 @@ align_matrices <- function(mat) {
 #'  "DNAMultipleAlignment" or "DNAStringSet".
 #' @param rows Numeric vector for row (sequence) selection.
 #' @param cols Numeric vector for cols (columns in MSA) selection.
-#' @examples
-#' data("msa")
-#' tidyGenR:::filt_msa(msa, 1:2, -c(1:100))
+#' @keywords internal
 filt_msa <- function(msa, rows = seq_along(msa), cols = NULL) {
     allowed_class <- c("DNAMultipleAlignment", "DNAStringSet")
     if (!class(msa) %in% allowed_class) {

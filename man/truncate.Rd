@@ -11,7 +11,7 @@ trunc_amp(
   trunc_fr,
   fw_pattern,
   rv_pattern = NULL,
-  outdir = "truncated",
+  outdir = tempdir(),
   filt_name = "_F_filt.fastq.gz",
   mode_trun = "pe",
   multithread = FALSE,
@@ -67,17 +67,16 @@ single-end or paired-end sequencing files.
 \examples{
 dem <-
  system.file("extdata", "demultiplexed", package = "tidyGenR")
-trunc_dir <- tempdir()
+# single end
 trunc_amp(
     mode_trun = "pe",
     in_dir = dem,
     fw_pattern = "1.fastq.gz",
     rv_pattern = "2.fastq.gz",
-    outdir = trunc_dir,
     trunc_fr = c(250, 180),
     max_ee = c(3, 3)
 )
-# example 2:
+# paired-end
 data("trunc_fr")
 trunc_amp(
     mode_trun = "se",
@@ -85,7 +84,6 @@ trunc_amp(
     in_dir = dem,
     fw_pattern = "1.fastq.gz",
     rv_pattern = "2.fastq.gz",
-    outdir = trunc_dir,
     trunc_fr = trunc_fr,
     max_ee = 3,
     trunc_q = 2

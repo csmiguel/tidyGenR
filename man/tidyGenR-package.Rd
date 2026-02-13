@@ -4,9 +4,9 @@
 \name{tidyGenR-package}
 \alias{tidyGenR}
 \alias{tidyGenR-package}
-\title{tidyGenR: Tidy Multilocus Amplicon Genotypes in R}
+\title{tidyGenR: Tidy Multilocus Amplicon Genotypes}
 \description{
-This package used to determine variants and genotypes from high throughput sequences from multilocus amplicon libraries, typically sequenced in Illumina MiSeq or similar. It provides a set of core functions for the central steps: demultiplex by locus, truncate reads, variant calling, and genotype calling. Additionally, it provides a set of functions for diagnosis and estimation of best running parameters and multiple extensions for genotype/variants manipulation and reformatting. Output variants and genotypes are output in 'tidy' format, thus facilitating reformatting, manipulation and potential connection to other R packages.
+Variant determination and genotyping from high throughput sequences from multilocus amplicon libraries, typically sequenced in Illumina MiSeq or similar. It provides a set of core functions for the central steps: demultiplex by locus, truncate reads, variant calling, and genotype calling. Additionally, it provides a set of functions for diagnosis and estimation of best running parameters and multiple extensions for genotype/variants manipulation and reformatting. Output variants and genotypes are output in 'tidy' format, thus facilitating reformatting, manipulation and potential connection to other R packages.
 }
 \seealso{
 Useful links:

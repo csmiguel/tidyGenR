@@ -33,10 +33,10 @@ need to be nested from element 1 to the last.
 }
 \examples{
 # from folder with FASTQ files
-path2trunated <-
+path2truncated <-
    system.file("extdata", "truncated",
              package = "tidyGenR")
 l <- list(
-      truncated = c(path2trunated, "F_filt.fastq.gz"))
+      truncated = c(path2truncated, "F_filt.fastq.gz"))
 reads_track(l)
 }

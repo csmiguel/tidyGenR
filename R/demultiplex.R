@@ -4,11 +4,10 @@
 #' (locus.sample.\[1|2\].fastq.gz) based on the locus-specific primer
 #' sequences using `cutadapt`.
 #'
-#' @details Additional trimming of RC primers in 3' end of reads or adapter
-#'  trimming requires additional runs of cutadapt in trimming mode with '-a'
-#' argument. Default "-O 12" restricts partial matching of primers to full
-#'  sequences in most cases. By default primers are match at any place in the
-#' DNA sequence but this behaviour can be changed by using anchored primers.
+#' @details This function creates a bash script to run cutadapt. By turning on running 'run = T',
+#' the function will try to execute the bash script produced (written to 'sh_out'). If the function produces any errors
+#' it is recommended to turn off running 'run = FALSE' and inspect the bash script produced to detect
+#' mis-specified cutadapt arguments or erroneous paths, and to solve them using the cutadapt documentation.
 #' @param interpreter Path to interpreter.
 #' @param cutadapt Path to cutadapt executable.
 #' @param freads Character vector with file paths to forward reads.
@@ -40,10 +39,7 @@
 #'                         package = "tidyGenR"),
 #'                         pattern = "2.fastq.gz",
 #'             full.names = TRUE)
-#' dem_sh <- tempfile(fileext = ".sh")
 #' demultiplex(
-#'     cutadapt = "cutadapt",
-#'     sh_out = dem_sh,
 #'     freads = freads,
 #'     rreads = rreads,
 #'     primers = primers,
@@ -51,13 +47,13 @@
 #'
 #' @export
 demultiplex <- function(interpreter = "/bin/bash",
-                        cutadapt = "cutadapt",
+                        cutadapt = system2("which", "cutadapt", stdout = TRUE),
                         freads,
                         rreads = NULL,
                         primers = NULL,
-                        sh_out = "demultiplex.sh",
-                        outdir = "demultiplexed",
-                        log_out = "cutadapt.log",
+                        sh_out = tempfile(fileext = ".sh"),
+                        outdir = tempdir(),
+                        log_out = tempfile(fileext = ".log"),
                         temp_folder = tempdir(),
                         mode = "pe",
                         overlap = 15,
@@ -262,7 +258,7 @@ check_cutadapt_version <- function(p_cutadapt) {
             system2(p_cutadapt, "--version", stdout = TRUE) |>
             as.numeric()
         if (cutadapt_v < 2.0) {
-            warning("Install cutadapt >2.0")
+            warning("Install cutadapt >2.0 to run demultiplex() in paired-end mode.")
         }
     } else if (!file.exists(p_cutadapt)) {
         cutadapt_v <- NULL

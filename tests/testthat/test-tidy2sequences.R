@@ -25,14 +25,15 @@ test_that("BioString object is generated correctly", {
 test_that("FASTA is produced correctly:", {
     data("genotypes")
     # write FASTA to file
+  p_seqs <- file.path(tempdir(), "test.fasta")
     seqs1 <-
         tidy2sequences(
             td = genotypes,
             fasta_header = "{locus}_{allele}",
-            filename = file.path(tempdir(), "test.fasta")
+            filename = p_seqs
         )
 
-    seqs2 <- Biostrings::readDNAStringSet(file.path(tempdir(), "test.fasta"))
+    seqs2 <- Biostrings::readDNAStringSet(p_seqs)
     # read FASTA is similar to BS output
     expect_equal(seqs1, seqs2)
 })

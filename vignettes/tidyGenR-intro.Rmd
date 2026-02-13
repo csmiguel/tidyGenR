@@ -59,13 +59,13 @@ head(primers, 3)
 ```
 
 ```{r demultiplex, results = "hide", message=FALSE}
+p_sh_out <- tempfile(fileext = ".sh")
 # demultiplex reads by locus using 3 primer pairs
 demultiplex(
-    cutadapt = "cutadapt",
     freads = freads,
     rreads = rreads,
     primers = primers[1:3, ],
-    sh_out = file.path(tempdir(), "cutadapt.sh"),
+    sh_out = p_sh_out,
     run = FALSE
 )
 ```
@@ -73,7 +73,7 @@ demultiplex(
 `demultiplex()` creates a script as below:
 
 ```{r cutadapt_script}
-readLines(file.path(tempdir(), "cutadapt.sh"))
+readLines(p_sh_out)
 ```
 
 If problems arise when running `cutadapt` `run = TRUE`, the script written to `sh_out` can be edited manually and run outside R. FASTQ with zero or few reads can be removed using `remove_poor_fastq()`
@@ -87,6 +87,7 @@ Variants are determined on the basis of 1-nt resolution. Thus, reads to be compa
 dem <-
   system.file("extdata", "demultiplexed", package = "tidyGenR")
 # truncate reads for one locus
+p_trun <- file.path(tempdir(), "truncated")
 one_locus <-
     trunc_amp(
         loci = "chrna9",
@@ -96,7 +97,7 @@ one_locus <-
         rv_pattern = "2.fastq.gz",
         trunc_fr = c(250, 180),
         max_ee = c(3, 3),
-        outdir = file.path(tempdir(), "truncated")
+        outdir = p_trun
     )
 ```
 
@@ -119,7 +120,7 @@ all_loci <-
         rv_pattern = "2.fastq.gz",
         trunc_fr = trunc_fr,
         max_ee = c(3, 3),
-        outdir = file.path(tempdir(), "truncated")
+        outdir = p_trun
     )
 ```
 
@@ -128,7 +129,7 @@ all_loci <-
 Truncated FASTQ:
 
 ```{r truncated_fastq}
-head(list.files(file.path(tempdir(), "truncated")))
+head(list.files(p_trun))
 ```
 
 IN and OUT reads after `trunc_amp()`:
@@ -142,7 +143,7 @@ head(all_loci, 3)
 Real sequence variants and their frequency are determined with `variant_call()`. It utilizes the 'DADA2' ASV determination pipeline, but for multiple loci. Determination of variants and potentially, merging paired-end reads, and removal of chimeras are performed altogether with `variant_call()`. Binned read qualities (i.e. from NovaSeq) require the use of `error_function = loess_err_mod4` (details in `?loess_err_mod4()`). Variants are returned in `tidy` format.
 
 ```{r variant_calling, message=FALSE, results="hide"}
-variants <- variant_call(in_dir = file.path(tempdir(), "truncated"))
+variants <- variant_call(in_dir = p_trun)
 head(variants)
 ```
 ```{r head_variants}

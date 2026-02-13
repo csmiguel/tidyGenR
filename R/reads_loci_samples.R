@@ -23,7 +23,7 @@
 #' reads_loci_samples(path = variants)
 #'
 #' @export
-reads_loci_samples <- function(path = "",
+reads_loci_samples <- function(path,
                                pattern_fq = "1.fastq.gz",
                                sample_locus = "(^[a-zA-Z0-9]*).([a-zA-Z0-9]*)",
                                all.variants = FALSE,

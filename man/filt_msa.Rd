@@ -19,7 +19,4 @@ Selects columns (MSA positions) and rows (DNA sequences) in
 "DNAMultipleAlignment" or "DNAStringSet" objects.
 Default values will return all positions and columns.
 }
-\examples{
-data("msa")
-tidyGenR:::filt_msa(msa, 1:2, -c(1:100))
-}
+\keyword{internal}

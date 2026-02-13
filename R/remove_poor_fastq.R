@@ -1,20 +1,26 @@
 #' Remove empty FASTQ
 #'
-#' Remove FASTA files with no reads in a given directory.
-#' It considers both FASTQ and FASTA.
+#' Removes FASTA/FASTQ files with a number of reads less than or equal to
+#' \code{min_reads} from a specified directory.
 #'
-#' @param path2fastq Folder with FASTQ files.
-#' @param pattern Pattern to match FASTQ files in folder.
-#' @param min_reads FASTQ files with a <= number of reads are deleted.
+#' @param path2fastq Character. Path to the directory containing FASTQ files.
+#' @param pattern Character. Pattern used to identify FASTQ files in
+#'   \code{path2fastq}.
+#' @param min_reads Integer. FASTQ files with a number of reads less than or
+#'   equal to this threshold are removed.
+#'
+#' @return
+#' No return value. Called for its side effects: FASTA/FASTQ files in
+#' \code{path2fastq} with a number of reads less than or equal to
+#' \code{min_reads} are removed from disk. Invisibly returns \code{NULL}.
 #' @examples
-#' # create empty FASTQ
-#' fq <- "no_reads.fastq"
-#' system2("touch", fq)
-#' # remove empty fastq
-#' remove_poor_fastq(".", pattern = "fastq")
+#' tmp <- tempdir()
+#' fq <- file.path(tmp, "no_reads.fastq")
+#' file.create(fq)
+#' remove_poor_fastq(tmp, pattern = "fastq", min_reads = 0)
 #' @export
 remove_poor_fastq <- function(
-    path2fastq = NULL, pattern = "fastq.gz",
+    path2fastq, pattern = "fastq.gz",
     min_reads = 0) {
     fastq <- sort(list.files(
         path = path2fastq,
@@ -33,4 +39,5 @@ remove_poor_fastq <- function(
         " files REMOVED:\n",
         paste(fastq[no_reads], collapse = "\n")
     )
+    invisible(NULL)
 }

@@ -5,7 +5,7 @@
 \title{Output reads per locus}
 \usage{
 reads_loci_samples(
-  path = "",
+  path,
   pattern_fq = "1.fastq.gz",
   sample_locus = "(^[a-zA-Z0-9]*).([a-zA-Z0-9]*)",
   all.variants = FALSE,

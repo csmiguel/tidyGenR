@@ -46,7 +46,7 @@
 #' @rdname variant_calling_dada
 variant_call_dada <- function(
     locus,
-    in_dir = NULL,
+    in_dir,
     fw_pattern = "_F_filt.fastq.gz",
     rv_pattern = NULL,
     sample_locus = "(^[a-zA-Z0-9]*)_([a-zA-Z0-9]*)",
