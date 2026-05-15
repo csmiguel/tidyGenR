@@ -13,7 +13,7 @@ filter_variants(tidy_var, maf = 0, ad = 0, invert = FALSE)
 proportion of number of reads across all variants > maf are retained.}
 
 \item{ad}{Allele depth. Minimum number of reads supporting a variant.
-Variants with ad > 3 are retained.}
+Variants supported by > ad reads are retained.}
 
 \item{invert}{FALSE (default) returns variants passing filters; TRUE inverts
 the selection.}

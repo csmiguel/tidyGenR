@@ -69,12 +69,10 @@ dem <-
  system.file("extdata", "demultiplexed", package = "tidyGenR")
 # single end
 trunc_amp(
-    mode_trun = "pe",
+    mode_trun = "se",
     in_dir = dem,
     fw_pattern = "1.fastq.gz",
-    rv_pattern = "2.fastq.gz",
-    trunc_fr = c(250, 180),
-    max_ee = c(3, 3)
+    trunc_fr = 200
 )
 # paired-end
 data("trunc_fr")

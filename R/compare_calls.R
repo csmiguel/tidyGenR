@@ -132,7 +132,7 @@ cc_elem1_combine <- function(td, creads) {
                     group_by(.data$locus, .data$sample, .data$md5) |>
                     summarise(
                         dset = x,
-                        reads = .data$reads,
+                        reads = sum(.data$reads),
                         .groups = "drop"
                     ) |>
                     ungroup()

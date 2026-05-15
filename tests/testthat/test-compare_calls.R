@@ -36,7 +36,7 @@ test_that("each element returns as expected", {
     # element 3:
     expect_true(is.logical(as.vector(cc[[3]])))
     # element 4:
-    expect_equal(names(cc[[4]]), c("method1", "method2", "dist_euc", "dist_eucp"))
+    expect_equal(names(cc[[4]]), c("method1", "method2", "dist_Manh", "dist_Manhp"))
 })
 
 # what about when there is no 'reads'

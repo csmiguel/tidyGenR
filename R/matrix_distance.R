@@ -24,7 +24,7 @@ dist_m <- function(m1, m2, prop = FALSE) {
 #' and col2...coln are numeric. Ex. number of observed variants in each cell.
 #' @param ld List of dataframes.
 #' @returns Dataframe with pairwise distances between all combinations.
-#' Absolute distance 'dist_euc' and relative 'dist_eucp'.
+#' Absolute distance 'dist_Manh' and relative 'dist_Manhp'.
 dist_m_all <- function(ld) {
     # reference df with pairwise comparisons.
     e4 <-
@@ -40,6 +40,6 @@ dist_m_all <- function(ld) {
             return(c(de, dep))
         })
     z <- data.frame(t(z))
-    names(z) <- c("dist_euc", "dist_eucp")
+    names(z) <- c("dist_Manh", "dist_Manhp")
     return(cbind(e4, z))
 }

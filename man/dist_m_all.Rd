@@ -11,7 +11,7 @@ dist_m_all(ld)
 }
 \value{
 Dataframe with pairwise distances between all combinations.
-Absolute distance 'dist_euc' and relative 'dist_eucp'.
+Absolute distance 'dist_Manh' and relative 'dist_Manhp'.
 }
 \description{
 Requires a list of matrices in which the first column are samples,

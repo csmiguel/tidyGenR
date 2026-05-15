@@ -8,11 +8,11 @@
 #' @importFrom dada2 dada derepFastq filterAndTrim getDadaOpt learnErrors
 #'  loessErrfun makeSequenceTable mergePairs plotQualityProfile
 #'  removeBimeraDenovo
-#' @importFrom DECIPHER AlignSeqs BrowseSeqs
+#' @importFrom DECIPHER AlignSeqs BrowseSeqs AlignPairs
 #' @importFrom digest digest
 #' @importFrom glue glue
 #' @importFrom methods is
-#' @importFrom plyr daply ddply dlply ldply
+#' @importFrom plyr daply ddply dlply ldply mapvalues
 #' @importFrom readr write_delim
 #' @importFrom ShortRead countFastq
 #' @importFrom stats as.dist cmdscale loess predict reorder setNames

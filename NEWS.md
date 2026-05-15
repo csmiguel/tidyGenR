@@ -1,5 +1,9 @@
 # tidyGenR News
 
+## tidyGenR 0.1.8 (2026-05-15)
+- fixed compare_calls(), did not allow creads = T in "genotypes".
+- new function align_variants_ref() runs pairwise alignments with local reference sequences and attaches alignment stats to tidy variants. Useful to spot homologous/non-homologous variants.
+
 ## tidyGenR 0.1.7 (2026-02-13)
 - fixed CRAN checks: tempdir and tempfiles for examples and tests, remove examples for internal `:::` functions, add `@value` where missing.
 - remove unused data objects msa and qlist.

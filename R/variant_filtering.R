@@ -4,7 +4,7 @@
 #' @param maf Miminum variant frequency. For each sample, variants with a
 #'  proportion of number of reads across all variants > maf are retained.
 #' @param ad  Allele depth. Minimum number of reads supporting a variant.
-#' Variants with ad > 3 are retained.
+#' Variants supported by > ad reads are retained.
 #' @param invert FALSE (default) returns variants passing filters; TRUE inverts
 #' the selection.
 #' @returns Tidy tibble with filtered variants.

@@ -8,7 +8,7 @@ mds_comp <- function(df) {
     if (!is.data.frame(df)) {
         stop("'df' has to bee a dataframe.")
     }
-    mand_names <- c("method1", "method2", "dist_euc")
+    mand_names <- c("method1", "method2", "dist_Manh")
     if (!all(mand_names %in% names(df))) {
         stop("'df' names need to have ", mand_names)
     }
@@ -27,7 +27,7 @@ mds_comp <- function(df) {
         complete_df |>
         pivot_wider(
             names_from = "method2",
-            values_from = "dist_euc"
+            values_from = "dist_Manh"
         ) |>
         column_to_rownames("method1") |>
         as.matrix()
